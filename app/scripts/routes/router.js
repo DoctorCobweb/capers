@@ -7,9 +7,10 @@ define([
     '../views/adminLogin',
     '../views/contact',
     '../views/analyse',
-    '../collections/filter'
+    '../collections/filter',
+    '../views/filterTerms'
 ], function ($, Backbone, HomeView, AdminLoginView, 
-             ContactView, AnalyseView, FilterCollection) {
+             ContactView, AnalyseView, FilterCollection, FilterTermsView) {
     'use strict';
 
     var RouterRouter = Backbone.Router.extend({
@@ -25,6 +26,7 @@ define([
         routes: {
             'home':           'home',
             'analyse':        'analyse',
+            'filter-terms':   'filterTerms',
             'capered':        'capered',
             'contact':        'contact',
             'admin-login':    'adminLogin'
@@ -65,6 +67,16 @@ define([
 
 
         },
+
+        
+        filterTerms: function () {
+            this.resetLinksAddActive('filter-terms');
+            console.log('in filterTerms route handler');
+            var filterTermsView = new FilterTermsView();
+            this.showView('.main-container', filterTermsView);
+        },
+
+
 
         capered: function () {
             console.log('in capered route handler');
