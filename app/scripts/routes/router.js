@@ -6,8 +6,10 @@ define([
     '../views/home',
     '../views/adminLogin',
     '../views/contact',
-    '../views/analyse'
-], function ($, Backbone, Home, AdminLogin, Contact, Analyse) {
+    '../views/analyse',
+    '../collections/filter'
+], function ($, Backbone, HomeView, AdminLoginView, 
+             ContactView, AnalyseView, FilterCollection) {
     'use strict';
 
     var RouterRouter = Backbone.Router.extend({
@@ -33,15 +35,33 @@ define([
         home: function () {
             console.log('in home route handler');
             this.resetLinksAddActive('home');
-            var home = new Home();
-            this.showView('.main-container', home);
+            var homeView = new HomeView();
+            this.showView('.main-container', homeView);
         },
 
         analyse: function () {
             console.log('in analyse route handler');
             this.resetLinksAddActive('analyse');
-            var analyse= new Analyse();
-            this.showView('.main-container', analyse);
+
+            var filterCollection = new FilterCollection();
+
+            //want to bind 'this' in options obj to router's 'this'. hence the IIFE
+            filterCollection.fetch(
+                (function (router) {
+                    return {
+                        error: function (c, r, o){
+                            console.log('error in fetching filterCollection contents');
+                        },
+                        success: function (c, r, o){
+                            console.log('success in fetching filterCollection contents');
+                            console.dir(c);
+                            console.dir(router); 
+                            var analyseView = new AnalyseView({filters: c});
+                            router.showView('.main-container', analyseView);
+                        }
+                    };
+                })(this)
+            );  
 
 
         },
@@ -56,8 +76,8 @@ define([
         contact: function () {
             console.log('in contact');
             this.resetLinksAddActive('contact');
-            var contact= new Contact();
-            this.showView('.main-container', contact);
+            var contactView = new ContactView();
+            this.showView('.main-container', contactView);
  
 
 
@@ -65,12 +85,14 @@ define([
 
 
         adminLogin: function () {
-            console.log('in admin-login route handler');
+            console.log('in admimLogin route handler');
             this.resetLinksAddActive('admin-login');
-            var adminLogin = new AdminLogin();
-            this.showView('.main-container', adminLogin);
+            var adminLoginView = new AdminLoginView();
+            this.showView('.main-container', adminLoginView);
         },
 
+
+// helper functions -------------------------------------------------------------
 
         resetLinksAddActive: function (element) {
             var links = $('ul.nav-pills > li');

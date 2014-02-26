@@ -1,5 +1,5 @@
-<form role="form"  method="POST" action="/analyse_content" id="analyse_content">
-    <button type="submit" id="submit_for_analysis" class="btn btn-success form-control" onClick="ajax_submit(event);">SUBMIT FOR ANALYSIS</button>
+<form role="form" id="analyse_content">
+    <button type="button" id="submit_for_analysis" class="btn btn-success form-control">SUBMIT FOR ANALYSIS</button>
 
     <div class="form-group">
         <textarea rows="20" class="form-control" id="analysis_content" placeholder="Paste your content into here for analysis."></textarea>
@@ -7,19 +7,3 @@
 
 
 </form>
-
-
-<script>
-    var ajax_submit = function (e) {
-          console.log('hello from ajax_submit()');
-          var form = $('#analyse_content');
-          e.preventDefault();
-          $("#submit_for_analysis").attr("disabled", "disabled");
-
-
-          $.post(form.attr('action'), form.serialize(), function (data) {
-            //form.parent().replaceWith(data);
-            console.log('callback from analyse_content POST');
-          });
-        };
-</script>
