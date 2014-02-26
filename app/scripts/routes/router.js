@@ -8,9 +8,11 @@ define([
     '../views/contact',
     '../views/analyse',
     '../collections/filter',
-    '../views/filterTerms'
+    '../views/filterTerms',
+    '../views/analysed'
 ], function ($, Backbone, HomeView, AdminLoginView, 
-             ContactView, AnalyseView, FilterCollection, FilterTermsView) {
+             ContactView, AnalyseView, FilterCollection, FilterTermsView,
+             AnalysedView) {
     'use strict';
 
     var RouterRouter = Backbone.Router.extend({
@@ -19,6 +21,22 @@ define([
             console.log('in initialize of router.js');
             this.navigate('home', {trigger: true});
 
+
+            //Custom Backbone Events
+            //Syntax for event: 'filename:thing-that-happened'
+            //this event is triggered from analyse.js view when content text has
+            //been filtered
+            Backbone.on('analyse:analysed-text', function (badWrapText, goodWrapText) {
+                console.log('BACKBONE:EVENT:analyse:analysed-text'); 
+                //console.log('badWrapText: ' + badWrapText); 
+                //console.log('goodWrapText: ' + goodWrapText); 
+
+                //call the capered route
+                this.navigate('capered');
+                this.capered(badWrapText, goodWrapText);
+
+
+            }, this); //'this' is router instance
  
         },
 
@@ -36,14 +54,14 @@ define([
 
         home: function () {
             console.log('in home route handler');
-            this.resetLinksAddActive('home');
+            this.resetLinksAddActive('home-tab');
             var homeView = new HomeView();
             this.showView('.main-container', homeView);
         },
 
         analyse: function () {
             console.log('in analyse route handler');
-            this.resetLinksAddActive('analyse');
+            this.resetLinksAddActive('analyse-tab');
 
             var filterCollection = new FilterCollection();
 
@@ -70,7 +88,7 @@ define([
 
         
         filterTerms: function () {
-            this.resetLinksAddActive('filter-terms');
+            this.resetLinksAddActive('filter-terms-tab');
             console.log('in filterTerms route handler');
             var filterTermsView = new FilterTermsView();
             this.showView('.main-container', filterTermsView);
@@ -78,27 +96,30 @@ define([
 
 
 
-        capered: function () {
+        capered: function (badWrapText, goodWrapText) {
             console.log('in capered route handler');
 
+            console.log(badWrapText);
+            console.log(goodWrapText);
+            var analysedView = new AnalysedView({
+                badWrapText: badWrapText, goodWrapText: goodWrapText});
 
+            this.showView('.main-container', analysedView);
+           
         },
 
 
         contact: function () {
             console.log('in contact');
-            this.resetLinksAddActive('contact');
+            this.resetLinksAddActive('contact-tab');
             var contactView = new ContactView();
             this.showView('.main-container', contactView);
- 
-
-
         },
 
 
         adminLogin: function () {
             console.log('in admimLogin route handler');
-            this.resetLinksAddActive('admin-login');
+            this.resetLinksAddActive('admin-login-tab');
             var adminLoginView = new AdminLoginView();
             this.showView('.main-container', adminLoginView);
         },

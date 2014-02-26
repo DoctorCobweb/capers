@@ -22,7 +22,7 @@ define([
 
         },
 
-        id: 'analyse',
+        id: 'analyse-container',
 
         template: JST['app/scripts/templates/analyse.ejs'],
 
@@ -42,11 +42,12 @@ define([
         analyse: function () {
             console.log('in analyse function');
 
+            // these arrays of arrays will hold the filtered & wrapped words of text
             var filteredBadWrap,
                 filteredGoodWrap;
 
             // get the users text content we need to filter through
-            var content = this.$('#analysis-content').val().trim();
+            var content = this.$('#analysis-text').val().trim();
 
             content = content.split('\n');
 
@@ -67,24 +68,30 @@ define([
                 for (var j = 0; j < content[i].length; j++) {
 
                     // for each word, compare against all filter words
-                    filteredBadWrap[i][j]  = this.filterWrap(content[i][j]).goodVersion;
-                    filteredGoodWrap[i][j] = this.filterWrap(content[i][j]).badVersion;
+                    filteredBadWrap[i][j]  = this.filterWrap(content[i][j]).badVersion;
+                    filteredGoodWrap[i][j] = this.filterWrap(content[i][j]).goodVersion;
                 }
             }
 
             // append a newline character back into lines. needed for joining later
-            for (var k = 0; k < filteredBadWrap.length; k++) {
-                filteredBadWrap[k] = filteredBadWrap[k].join(' ') + '\n';    
+            for (var k = 0; k < content.length; k++) {
+                filteredBadWrap[k]  = filteredBadWrap[k].join(' ')  + '\n';    
+                filteredGoodWrap[k] = filteredGoodWrap[k].join(' ') + '\n';    
             }
             
-            this.analysedBadWrap = filteredBadWrap.join('');
+            this.analysedBadWrap =  filteredBadWrap.join('');
+            this.analysedGoodWrap = filteredGoodWrap.join('');
+
+            this.combinedWrap = this.analysedBadWrap + '\n\n' + this.analysedGoodWrap;
 
             // show corrected content back to user
-            this.$('#analysis-content').val(this.analysedBadWrap);
-            //this.$('#analysis_content').html(content_split.join(''));
+            //this.$('#analysis-content').val(this.analysedBadWrap);
+            this.$('#analysis-text').val(this.combinedWrap);
 
-            var analysedView = new AnalysedView();
-            this.$('#analyse-content').append(analysedView.render().el);
+            console.log('BACKBONE:TRIGGER: triggering analyse:analysed-text event');
+            Backbone.trigger('analyse:analysed-text', 
+                this.analysedBadWrap,
+                this.analysedGoodWrap);
 
         },
 
@@ -94,8 +101,8 @@ define([
         //through the 2d content array again. trick is to return an object containing
         //the good and bad wrapped versions from the matching of all filters.
         filterWrap: function (term) {
-            console.log('in filterWrap function');
-            console.log(term);
+            //console.log('in filterWrap function');
+            //console.log(term);
 
             var generalWrap = {};
 
@@ -115,14 +122,20 @@ define([
 
             } else {
                 //wrap the word in something that css can use
-                generalWrap.badVersion = '<span class="bad-term" id="'
-                    + result.get('badTerm') + '">'
+                //id attr always contain the opposite version of text displayed so you
+                //can easily lookup filter pairs in element.
+                //TODO: change individual matches instead of whol doc correction. using
+                //id attr<->text setup.
+                //generalWrap.badVersion = '<span class="bad-term" id="'
+                generalWrap.badVersion = '<span class="btn-danger" id="'
+                    + result.get('goodTerm') + '">'
                     + term
                     + '</span>';
 
-                generalWrap.goodVersion = '<span class="good-term" id="'
-                    + result.get('goodTerm') + '">'
-                    + term
+                //generalWrap.goodVersion = '<span class="good-term" id="'
+                generalWrap.goodVersion = '<span class="btn-success" id="'
+                    + result.get('badTerm') + '">'
+                    + result.get('goodTerm') 
                     + '</span>';
 
                 return generalWrap;
