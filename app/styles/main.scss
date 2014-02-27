@@ -8,6 +8,24 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 }
 */
 
+
+#table-filter-col {
+    max-width: 20px;
+}
+
+
+#table-filter {
+    min-width: 150px;
+}
+
+.text-muted {
+    color: #5cb85c;
+}
+
+.jumbotron {
+    background-color:#70DB93;
+}
+
 .actual-analysed-text {
     padding: 5px;
     background-color: #fff;
