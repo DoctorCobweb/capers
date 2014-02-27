@@ -23,6 +23,16 @@ define([
             //used to add a unique integer into the id attr of good and bad term <span>'s
             this.id_count = 0;
 
+            //syntax for this.foundedBadTerms object:
+            // {"aBadTerm": { "aBadTerm": ....., 
+            //                "aGoodTerm": ...., 
+            //                "description": ... }, 
+            //      .
+            //      .
+            //      .
+            // }
+            this.foundBadTerms = {};
+
         },
 
         id: 'analyse-container',
@@ -98,10 +108,13 @@ define([
             //this.$('#analysis-content').val(this.analysedBadWrap);
             this.$('#analysis-text').val(this.combinedWrap);
 
+            //console.log(this.foundBadTerms);
+
             console.log('BACKBONE:TRIGGER: triggering analyse:analysed-text event');
             Backbone.trigger('analyse:analysed-text', 
                 this.analysedBadWrap,
-                this.analysedGoodWrap);
+                this.analysedGoodWrap,
+                this.foundBadTerms);
 
         },
 
@@ -152,6 +165,16 @@ define([
                     + '>'
                     + result.get('goodTerm') 
                     + '</span>';
+
+                //add in found bad terms into the obj which will be eventually passed
+                //onto analysedSummary.js View for displaying 
+                if (!this.foundBadTerms[term]) {
+                    this.foundBadTerms[term] = {
+                        'badTerm':     result.get('badTerm'),
+                        'goodTerm':    result.get('goodTerm'),
+                        'description': result.get('description')
+                    };
+                }
 
                 return generalWrap;
             }

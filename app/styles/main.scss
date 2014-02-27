@@ -2,6 +2,40 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 
 @import 'sass-bootstrap/lib/bootstrap';
 
+/*
+.col-md-3 {
+    width: 32%;
+}
+*/
+
+.actual-analysed-text {
+    padding: 5px;
+    background-color: #fff;
+}
+
+.analysed-text {
+    padding-bottom: 10px;
+}
+
+.analysed-summary-term {
+    /* background-color:#f0ad4e; */
+    background-color:#ddd;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.analysed-summary-ul {
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+.btn-danger,
+.btn-success {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 2px;
+}
+
 .analysed-header {
     background:#eee;
     margin-bottom:10px;
@@ -10,10 +44,12 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 .analysed-text {
     background:#eee;
     margin-right:10px;
+    margin-bottom:15px;
 }
 
 .analysed-summary{
     background:#eee;
+    margin-bottom:15px;
 }
 
 .bad-term {
@@ -24,9 +60,26 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
     background:#83f52c;
 }
 
-#submit-for-analysis,
+#submit-for-analysis {
+    margin-bottom: 15px;
+    margin-top: 15px;
+
+}
+
+#toggle-all {
+    margin-right: 5px;
+}
+
+#copy-text {
+    margin-left: 5px;
+}
+
+#copy-text,
 #toggle-all {
     margin-bottom: 15px;
+    margin-top: 15px;
+    float:left;
+    width: 49%
 }
 
 .browsehappy {

@@ -3,8 +3,9 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'templates'
-], function ($, _, Backbone, JST) {
+    'templates',
+    './analysedSummary'
+], function ($, _, Backbone, JST, AnalysedSummaryView) {
     'use strict';
 
     var AnalysedView = Backbone.View.extend({
@@ -13,17 +14,17 @@ define([
             console.log('in analysed view');
             //console.log(this.options.badWrapText);
             //console.log(this.options.goodWrapText);
+            //console.log(this.options.foundBadTerms);
 
             // get the passed in text from creation, use to set template variables    
             this.locals = {
-                badWrapText: this.options.badWrapText,
+                badWrapText:  this.options.badWrapText,
                 goodWrapText: this.options.goodWrapText};
-
         },
 
 
         events: {
-            'click .a-term':  'toggle',
+            'click .a-term':      'toggle',
             'click #toggle-all' : 'toggleAll'
         },
 
@@ -36,6 +37,14 @@ define([
 
         render: function () {
             this.$el.html(this.template(this.locals));
+
+            //create the analysed summary view to display on the righthand side
+            this.analysedSummaryView = new AnalysedSummaryView(
+                {foundBadTerms: this.options.foundBadTerms,
+                 parent: this});
+
+            this.$('.analysed-summary').append(this.analysedSummaryView.render().el);
+
             return this;
         },
 
@@ -107,8 +116,18 @@ define([
 
             // this === analysedView instance
             var bound_individuals = _.bind(individuals, this);
-
             _.each(allSpans, bound_individuals);
+        },
+
+
+        beforeClose: function () {
+            // when router calls this view to close, make sure you also close the 
+            // analysedSummary view instance!
+            
+            console.log('in beforeClose() in analysed.js');
+            if (this.analysedSummaryView) {
+                this.analysedSummaryView.close();
+            }
         }
 
     });

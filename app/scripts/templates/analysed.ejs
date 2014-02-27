@@ -1,17 +1,23 @@
 <div class="analysed-header col-md-12">
     <h4>Analysed Content</h4>
-    <p>Everything in red has been matched to a bad term. Click on highlighted terms to toggle between their <span class="btn-success">good</span> and <span class="btn-danger">bad</span> representations.</p>
+    <p>Click on highlighted terms to toggle between their <span class="btn-success">good</span> and <span class="btn-danger">bad</span> representations, or click the 'toggle all' button to change them all at once.</p>
 </div>
 
-<div class="analysed-text col-md-7">
-    <button type="button" id="toggle-all" class="btn btn-success form-control">TOGGLE ALL</button>
 
-    <p><%= badWrapText %></p>
+<div class="analysed-text col-md-8">
+    <button type="button" id="toggle-all" class="btn btn-primary form-control">TOGGLE ALL</button>
+    <button type="button" id="copy-text" class="btn btn-primary form-control">COPY TEXT</button>
+
+
+<div style="clear: both;"></div>
+
+
+<div class="actual-analysed-text" ><%= badWrapText %></div>
 
 </div>
 
-<div class="analysed-summary col-md-4">
+
+<div class="analysed-summary col-md-3">
     <h4>Detailed Summary</h4>
-    <p>Bad Term -> Good Term : Description</p>
 </div>
 

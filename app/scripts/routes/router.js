@@ -26,15 +26,17 @@ define([
             //Syntax for event: 'filename:thing-that-happened'
             //this event is triggered from analyse.js view when content text has
             //been filtered
-            Backbone.on('analyse:analysed-text', function (badWrapText, goodWrapText) {
-                console.log('BACKBONE:EVENT:analyse:analysed-text'); 
-                //console.log('badWrapText: ' + badWrapText); 
-                //console.log('goodWrapText: ' + goodWrapText); 
-
-                //call the capered route
-                this.navigate('capered');
-                this.capered(badWrapText, goodWrapText);
-
+            Backbone.on('analyse:analysed-text', 
+                function (badWrapText, goodWrapText, foundBadTerms) {
+                    console.log('BACKBONE:EVENT:analyse:analysed-text'); 
+                    //console.log('badWrapText: ' + badWrapText); 
+                    //console.log('goodWrapText: ' + goodWrapText); 
+                    //console.log('foundBadTerms:');
+                    //console.log(foundBadTerms); 
+    
+                    //call the capered route
+                    this.navigate('capered');
+                    this.capered(badWrapText, goodWrapText, foundBadTerms);
 
             }, this); //'this' is router instance
  
@@ -96,13 +98,16 @@ define([
 
 
 
-        capered: function (badWrapText, goodWrapText) {
+        capered: function (badWrapText, goodWrapText, foundBadTerms) {
             console.log('in capered route handler');
 
-            console.log(badWrapText);
-            console.log(goodWrapText);
+            //console.log(badWrapText);
+            //console.log(goodWrapText);
+            //console.log(foundBadTerms);
             var analysedView = new AnalysedView({
-                badWrapText: badWrapText, goodWrapText: goodWrapText});
+                badWrapText: badWrapText, 
+                goodWrapText: goodWrapText,
+                foundBadTerms: foundBadTerms});
 
             this.showView('.main-container', analysedView);
            
@@ -138,6 +143,7 @@ define([
 
         showView: function (selector, view) {
             console.log('in showView() in router.js');
+
             if (this.currentView) {
                 this.currentView.close();
             }
