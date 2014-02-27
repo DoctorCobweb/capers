@@ -1,17 +1,17 @@
 <div class="analysed-header col-md-12">
     <h4>Analysed Content</h4>
-    <p>Everything in red has been matched to a Bad Term. The Summary section contains further details on corresponding Good Terms and their descriptions.</p>
+    <p>Everything in red has been matched to a bad term. Click on highlighted terms to toggle between their <span class="btn-success">good</span> and <span class="btn-danger">bad</span> representations.</p>
 </div>
 
 <div class="analysed-text col-md-7">
+    <button type="button" id="toggle-all" class="btn btn-success form-control">TOGGLE ALL</button>
 
     <p><%= badWrapText %></p>
-    <p><%= goodWrapText %></p>
 
 </div>
 
-<div class="analysed-explanations col-md-4">
-    <h4>Analysis Explanations</h4>
+<div class="analysed-summary col-md-4">
+    <h4>Detailed Summary</h4>
     <p>Bad Term -> Good Term : Description</p>
 </div>
 

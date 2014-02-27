@@ -20,6 +20,9 @@ define([
             //    console.log(filter);
             //});
 
+            //used to add a unique integer into the id attr of good and bad term <span>'s
+            this.id_count = 0;
+
         },
 
         id: 'analyse-container',
@@ -66,6 +69,7 @@ define([
             // run through all the words and try to match each to a filter word
             for (var i = 0; i < content.length; i++) {
                 for (var j = 0; j < content[i].length; j++) {
+                    this.id_count++;
 
                     // for each word, compare against all filter words
                     filteredBadWrap[i][j]  = this.filterWrap(content[i][j]).badVersion;
@@ -75,8 +79,14 @@ define([
 
             // append a newline character back into lines. needed for joining later
             for (var k = 0; k < content.length; k++) {
-                filteredBadWrap[k]  = filteredBadWrap[k].join(' ')  + '\n';    
-                filteredGoodWrap[k] = filteredGoodWrap[k].join(' ') + '\n';    
+
+
+                //newline characters are neglected when putting string back into html
+                //form in analysedView. instead, use </br> element as our newline.
+                //filteredBadWrap[k]  = filteredBadWrap[k].join(' ')  + '\n';
+                //filteredGoodWrap[k] = filteredGoodWrap[k].join(' ') + '\n';    
+                filteredBadWrap[k]  = filteredBadWrap[k].join(' ')  + '</br>';
+                filteredGoodWrap[k] = filteredGoodWrap[k].join(' ') + '</br>';    
             }
             
             this.analysedBadWrap =  filteredBadWrap.join('');
@@ -121,20 +131,25 @@ define([
                 return generalWrap;
 
             } else {
+                
                 //wrap the word in something that css can use
                 //id attr always contain the opposite version of text displayed so you
                 //can easily lookup filter pairs in element.
                 //TODO: change individual matches instead of whol doc correction. using
                 //id attr<->text setup.
                 //generalWrap.badVersion = '<span class="bad-term" id="'
-                generalWrap.badVersion = '<span class="btn-danger" id="'
-                    + result.get('goodTerm') + '">'
+                generalWrap.badVersion = '<span class="btn-danger a-term"' 
+                    + 'id="' + this.id_count + '"' 
+                    + 'data-opposite-term=' + result.get('goodTerm') 
+                    + '>'
                     + term
                     + '</span>';
 
                 //generalWrap.goodVersion = '<span class="good-term" id="'
-                generalWrap.goodVersion = '<span class="btn-success" id="'
-                    + result.get('badTerm') + '">'
+                generalWrap.goodVersion = '<span class="btn-success a-term"'
+                    + 'id="' + this.id_count + '"'
+                    + 'data-opposite-term=' + result.get('badTerm') 
+                    + '>'
                     + result.get('goodTerm') 
                     + '</span>';
 

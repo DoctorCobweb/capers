@@ -12,7 +12,7 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
     margin-right:10px;
 }
 
-.analysed-explanations{
+.analysed-summary{
     background:#eee;
 }
 
@@ -24,7 +24,8 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
     background:#83f52c;
 }
 
-#submit-for-analysis {
+#submit-for-analysis,
+#toggle-all {
     margin-bottom: 15px;
 }
 
