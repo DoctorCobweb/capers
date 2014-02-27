@@ -8,6 +8,15 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 }
 */
 
+.logo a {
+    color: #5cb85c;
+    text-decoration: none; 
+}
+
+.logo a:hover {
+    text-decoration: none; 
+    color: #47a447;
+}
 
 #table-filter-col {
     max-width: 20px;
