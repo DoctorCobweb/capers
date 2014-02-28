@@ -24,8 +24,9 @@ define([
 
 
         events: {
-            'click .a-term':      'toggle',
-            'click #toggle-all' : 'toggleAll'
+            'click .a-term':          'toggle',
+            'click #toggle-all' :     'toggleAll',
+            'click #finalize-copy':   'finalizeCopy'
         },
 
 
@@ -106,6 +107,7 @@ define([
 
                 var $span = this.$('#' + span.id);
                 var _oppositeTerm = $span.html();
+                //var _oppositeTerm = $span.data('opposite-term');
 
                 //console.log($span);
 
@@ -117,6 +119,79 @@ define([
             // this === analysedView instance
             var bound_individuals = _.bind(individuals, this);
             _.each(allSpans, bound_individuals);
+        },
+
+
+        finalizeCopy: function () {
+            var $a = $('.actual-analysed-text');
+            //need to parse out all the html elements <span>, <br>, (TODO: and possibly
+            //others!!!)
+
+            this.stripAwayHighlighting($a); 
+            var copiedText = this.copyText($a); 
+            //console.log(copiedText);
+        },
+
+
+        stripAwayHighlighting: function ($a) {
+            var $item;
+            var s = _.map($a.contents(), function (item) { 
+                $item = $('#'+ item.id);
+                $item.replaceWith($item.html())
+            });
+            //console.log(s); //results in an array of undefined's. ???? why?
+        },
+
+
+        copyText: function ($aClone) {
+            //create an array now to parse html, then join it back up to make a parsed
+            //string for easy copying & pasting.
+            var tempA = []; 
+
+            _.each($aClone.contents(), function (item) { 
+                if (item.nodeName === 'BR') {
+                    //console.log('BR');
+                    //item.outerHTML = '\n';
+                    tempA.push('\n');
+                } else if (item.nodeName === '#text') {
+                    tempA.push(item.textContent);
+                } else {
+                    tempA.push('ERROR parsing. See copyText() in analysed.js');
+                }
+            });
+
+
+            var p = '';
+            for (var i = 0; i < tempA.length - 1; ) {
+                console.log('BEGIN LOOP ITERATION')
+                console.log('tempA[i]: ' + tempA[i]);
+                console.log('tempA[i+1]: ' + tempA[i+1]);
+
+                if (tempA[i] === '\n' && tempA[i + 1] !== '\n') {
+                    console.log('(\\n, NOT \\n)');
+                    p = p + tempA[i] + tempA[i + 1];
+                    i = i + 2;
+                } else if (tempA[i] === '\n' && tempA[i + 1] === '\n') {
+                    console.log('(\\n, \\n)');
+                    p = p + tempA[i] + tempA[i + 1];
+                    i = i + 2;
+                } else if (tempA[i] !== '\n' && tempA[i + 1] !== '\n') {
+                    console.log('(NOT \\n, NOT \\n)');
+                    p = p + tempA[i] + tempA[i + 1]; //why no space b/n tempA elements?
+                    i = i + 2;
+                } else if (tempA[i] !== '\n' && tempA[i + 1] === '\n') {
+                    console.log('(NOT \\n, \\n)');
+                    p = p + tempA[i] + tempA[i + 1];
+                    i = i + 2;
+                } else {
+                    console.log('NO MATCH for tempA[i]: ' + tempA[i]);
+                    i++;
+                }
+            }
+
+
+            console.log(p);
+            return p;
         },
 
 
