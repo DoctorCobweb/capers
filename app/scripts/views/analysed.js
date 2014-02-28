@@ -129,7 +129,7 @@ define([
 
             this.stripAwayHighlighting($a); 
             var copiedText = this.copyText($a); 
-            //console.log(copiedText);
+            console.log(copiedText);
         },
 
 
@@ -154,43 +154,59 @@ define([
                     //item.outerHTML = '\n';
                     tempA.push('\n');
                 } else if (item.nodeName === '#text') {
-                    tempA.push(item.textContent);
+                    tempA.push(item.textContent.trim());
                 } else {
                     tempA.push('ERROR parsing. See copyText() in analysed.js');
                 }
             });
 
+            //console.dir(tempA);
 
             var p = '';
             for (var i = 0; i < tempA.length - 1; ) {
-                console.log('BEGIN LOOP ITERATION')
-                console.log('tempA[i]: ' + tempA[i]);
-                console.log('tempA[i+1]: ' + tempA[i+1]);
+                //console.log('BEGIN LOOP ITERATION')
+                //console.log('tempA[i]: ' + tempA[i]);
+                //console.log('tempA[i+1]: ' + tempA[i+1]);
 
                 if (tempA[i] === '\n' && tempA[i + 1] !== '\n') {
-                    console.log('(\\n, NOT \\n)');
-                    p = p + tempA[i] + tempA[i + 1];
+                    // e.g. [..., \n, hello, ...]
+
+                    //console.log('(\\n, NOT \\n)');
+                    p = p + tempA[i] + tempA[i + 1] + ' ';
                     i = i + 2;
+
                 } else if (tempA[i] === '\n' && tempA[i + 1] === '\n') {
-                    console.log('(\\n, \\n)');
+                    //e.g. [..., \n, \n, ...]
+   
+                    //console.log('(\\n, \\n)');
                     p = p + tempA[i] + tempA[i + 1];
                     i = i + 2;
+
                 } else if (tempA[i] !== '\n' && tempA[i + 1] !== '\n') {
-                    console.log('(NOT \\n, NOT \\n)');
-                    p = p + tempA[i] + tempA[i + 1]; //why no space b/n tempA elements?
+                    //e.g. [..., helo, world, ...]     
+
+                    //console.log('(NOT \\n, NOT \\n)');
+                    p = p + tempA[i] + ' ' + tempA[i + 1] + ' ';
                     i = i + 2;
+
                 } else if (tempA[i] !== '\n' && tempA[i + 1] === '\n') {
-                    console.log('(NOT \\n, \\n)');
-                    p = p + tempA[i] + tempA[i + 1];
+                    //e.g. [..., hello, \n, ...]
+
+                    //console.log('(NOT \\n, \\n)');
+                    //must trim ending whitespace if there is any. otherwise u can get
+                    //doublespace.
+                    p = p.trim() + tempA[i] + tempA[i + 1];
                     i = i + 2;
+
                 } else {
-                    console.log('NO MATCH for tempA[i]: ' + tempA[i]);
+                    //e.g. ?
+
+                    //console.log('NO MATCH for tempA[i]: ' + tempA[i]);
                     i++;
                 }
             }
 
 
-            console.log(p);
             return p;
         },
 
