@@ -48,7 +48,6 @@ require([
 
     
         Backbone.history.start();
-	new Home()
         new Router();
     });
 });

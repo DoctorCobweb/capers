@@ -5,22 +5,26 @@ define([
     'backbone',
     '../views/home',
     '../views/adminLogin',
-    '../views/contact',
     '../views/analyse',
     '../collections/filter',
     '../views/filterTerms',
     '../views/analysed'
-], function ($, Backbone, HomeView, AdminLoginView, 
-             ContactView, AnalyseView, FilterCollection, FilterTermsView,
-             AnalysedView) {
+], function ($, 
+	     Backbone, 
+	     HomeView, 
+	     AdminLoginView, 
+             AnalyseView, 
+	     FilterCollection, 
+	     FilterTermsView,
+	     AnalysedView) {
+
     'use strict';
 
     var RouterRouter = Backbone.Router.extend({
 
         initialize: function () {
             console.log('in initialize of router.js');
-            //this.navigate('home', {trigger: true});
-
+            this.navigate('#/home', {trigger: true});
 
             //Custom Backbone Events
             //Syntax for event: 'filename:thing-that-happened'
@@ -48,10 +52,8 @@ define([
             'analyse':        'analyse',
             'filter-terms':   'filterTerms',
             'capered':        'capered',
-            //'contact':        'contact',
             'admin-login':    'adminLogin'
         },
-
 
 
         home: function () {
@@ -111,14 +113,6 @@ define([
 
             this.showView('.main-container', analysedView);
            
-        },
-
-
-        contact: function () {
-            console.log('in contact');
-            this.resetLinksAddActive('contact-tab');
-            var contactView = new ContactView();
-            this.showView('.main-container', contactView);
         },
 
 

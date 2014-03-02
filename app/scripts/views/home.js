@@ -11,14 +11,14 @@ define([
     var HomeView = Backbone.View.extend({
         initialize: function () {
             console.log('in home view');
-	    this.render();
+	    //this.render();
         },
 
 
         template: JST['app/scripts/templates/home.ejs'],
 
 
-        el: '.main-container',
+        //el: '.main-container',
 
 
         render: function () {
