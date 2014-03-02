@@ -14,7 +14,7 @@ define([
 
         initialize: function () {
             console.log('in analysedSummary');
-            console.log(this.options.foundBadTerms);
+            console.dir(this.options.foundBadTerms);
             console.log('parent of analysedSummaryView instance is:');
             console.log(this.options.parent);
         },
@@ -41,6 +41,19 @@ define([
 
         renderMatchedTerms: function () {
             var self = this;
+
+	    if (_.isEmpty(this.options.foundBadTerms)){
+                console.log('this.options.foundBadTerms is empty');
+		console.log(this.options.foundBadTerms);
+		
+		this.options.foundBadTerms = {
+	            "No Matches": {
+	                "badTerm": "No bad terms found. You\'re good to go.",
+	                "goodTerm": "",
+	                "description": ""
+		    }	
+		};
+	    }
 
             _.each(this.options.foundBadTerms, function (term) {
 
