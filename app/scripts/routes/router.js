@@ -128,8 +128,8 @@ define([
 
         resetLinksAddActive: function (element) {
             var links = $('ul.nav-pills > li');
-            console.log('links:');
-            console.dir(links);
+            //console.log('links:');
+            //console.dir(links);
             links.removeClass('active');
             $('#' + element).addClass('active');
         },
