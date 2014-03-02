@@ -8,6 +8,10 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 }
 */
 
+.analysed-buttons {
+    padding-left: 0px;
+    padding-right: 0px;
+}
 
 .nav > li > a {
     padding: 10px 10px;
@@ -80,7 +84,7 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 }
 
 .analysed-text {
-    margin-right:10px;
+    /* margin-right:10px; */
     margin-bottom:15px;
     background-color: #70DB93;
     padding-bottom: 10px;
@@ -118,7 +122,7 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
     margin-bottom: 15px;
     margin-top: 15px;
     float:left;
-    width: 49%
+    /* width: 49% */
 }
 
 .browsehappy {

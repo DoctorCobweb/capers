@@ -32,14 +32,14 @@ define([
             //been filtered
             Backbone.on('analyse:analysed-text', 
                 function (badWrapText, goodWrapText, foundBadTerms) {
-                    console.log('BACKBONE:EVENT:analyse:analysed-text'); 
+                    //console.log('BACKBONE:EVENT:analyse:analysed-text'); 
                     //console.log('badWrapText: ' + badWrapText); 
                     //console.log('goodWrapText: ' + goodWrapText); 
                     //console.log('foundBadTerms:');
                     //console.log(foundBadTerms); 
     
                     //call the capered route
-                    this.navigate('capered');
+                    this.navigate('#/capered');
                     this.capered(badWrapText, goodWrapText, foundBadTerms);
 
             }, this); //'this' is router instance
@@ -51,7 +51,7 @@ define([
             'home':           'home',
             'analyse':        'analyse',
             'filter-terms':   'filterTerms',
-            'capered':        'capered',
+            '/capered':        'capered', //need to prepend '/' it's internal route
             'admin-login':    'adminLogin'
         },
 
@@ -62,6 +62,7 @@ define([
             var homeView = new HomeView();
             this.showView('.main-container', homeView);
         },
+
 
         analyse: function () {
             console.log('in analyse route handler');
@@ -97,7 +98,6 @@ define([
             var filterTermsView = new FilterTermsView();
             this.showView('.main-container', filterTermsView);
         },
-
 
 
         capered: function (badWrapText, goodWrapText, foundBadTerms) {
@@ -145,9 +145,6 @@ define([
             this.currentView = view;
             return view;
         }
-
-
     });
-
     return RouterRouter;
 });

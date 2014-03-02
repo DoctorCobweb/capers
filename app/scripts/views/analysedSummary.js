@@ -11,14 +11,14 @@ define([
 
     var AnalysedsummaryView = Backbone.View.extend({
 
+
         initialize: function () {
             console.log('in analysedSummary');
             console.log(this.options.foundBadTerms);
             console.log('parent of analysedSummaryView instance is:');
             console.log(this.options.parent);
-
-
         },
+
 
         className: 'analysed-summary-ul',
 
@@ -47,20 +47,12 @@ define([
                var aTerm = new AnalysedSummaryTerm({term: term});
                self.$el.append(aTerm.render().el);
             });
-
-
-
-
         },
 
 
         beforeClose: function () {
             console.log('in beforeClose() in analysedSummary');
-
         }
-
-        
     });
-
     return AnalysedsummaryView;
 });

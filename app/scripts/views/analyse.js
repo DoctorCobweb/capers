@@ -11,6 +11,7 @@ define([
 
     var AnalyseView = Backbone.View.extend({
 
+
         initialize: function () {
             console.log('initialize of AnalyseView');
             // console.log(this.options.filters);
@@ -26,24 +27,19 @@ define([
             //syntax for this.foundedBadTerms object:
             // {"aBadTerm": { "aBadTerm": ....., 
             //                "aGoodTerm": ...., 
-            //                "description": ... }, 
-            //      .
-            //      .
-            //      .
-            // }
+            //                "description": ... },...}
             this.foundBadTerms = {};
-
         },
 
+
         id: 'analyse-container',
+
 
         template: JST['app/scripts/templates/analyse.ejs'],
 
 
         events: {
             'click #submit-for-analysis': 'analyse'
-
-
         },
 
 
@@ -51,6 +47,7 @@ define([
             this.$el.html(this.template());
             return this;
         },
+
 
         analyse: function () {
             console.log('in analyse function');
@@ -115,9 +112,7 @@ define([
                 this.analysedBadWrap,
                 this.analysedGoodWrap,
                 this.foundBadTerms);
-
         },
-
 
   
         //creates good and bad wrappers around terms. doing it so you dont have to loop
@@ -179,10 +174,6 @@ define([
                 return generalWrap;
             }
         }
-
-
-
     });
-
     return AnalyseView;
 });
