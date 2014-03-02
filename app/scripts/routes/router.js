@@ -19,7 +19,7 @@ define([
 
         initialize: function () {
             console.log('in initialize of router.js');
-            this.navigate('home', {trigger: true});
+            //this.navigate('home', {trigger: true});
 
 
             //Custom Backbone Events
@@ -48,7 +48,7 @@ define([
             'analyse':        'analyse',
             'filter-terms':   'filterTerms',
             'capered':        'capered',
-            'contact':        'contact',
+            //'contact':        'contact',
             'admin-login':    'adminLogin'
         },
 

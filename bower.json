@@ -1,5 +1,5 @@
 {
-  "name": "capers",
+  "nname": "capers",
   "version": "0.0.0",
   "dependencies": {
     "sass-bootstrap": "~3.0.0",

@@ -28,23 +28,27 @@ require.config({
 
 require([
     'backbone',
-    'routes/router'
+    'routes/router',
+    'views/home'
 ], function (Backbone, Router, Home) {
 
     $(function () {
+	console.log('in main.js of backbone app');
+
         Backbone.View.prototype.close = function () {
             console.log('close view....');
             if (this.beforeClose) {
                 this.beforeClose();
             }
-    
             //remove view from DOM and call stopListening to remove bound 
             //events the view has listenTo'd
             this.remove();
             this.unbind();
         };
+
     
         Backbone.history.start();
+	new Home()
         new Router();
     });
 });
