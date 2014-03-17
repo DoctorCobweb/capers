@@ -130,6 +130,10 @@ define([
             this.stripAwayHighlighting($a); 
             var copiedText = this.copyText($a); 
             console.log(copiedText);
+
+	    //this does not preserve newlines.
+	    //prompt the user to copy the formatted text
+	    //window.prompt('Copy to clipboard, Ctrl/Cmmd-C, Enter', copiedText);
         },
 
 
